@@ -3,14 +3,15 @@ from math import ceil
 from functools import reduce
 import pickle
 
-	
+
 try:
 	file = open("fibonacci.txt", "r")
-	fibo = []
+	factorization = []
 	for line in file.readlines():
-		fibo.append(int(line))
+		factorization.append(list(map(int, line.strip("\n").split())))
 except FileNotFoundError:
-	fibo = [1,1]
+	print("Fatal Error, run FibonacciFactorization first")
+	quit()
 
 
 def factors(n):
@@ -41,8 +42,8 @@ def add_all_digits(l):
 	return s
 			
  
-def is_smith_number(n):
-	fac = factors(n)
+def is_smith_number(n, i):
+	fac = factorization[i]
 	if len(fac) > 1:
 		return sum_digits(n) == add_all_digits(fac)
 	else:
@@ -50,26 +51,15 @@ def is_smith_number(n):
 
 
 def fibonacci_and_smith(n):
+	fibo = [1,1]
 	r = []
-	for i in range(n):
+	for i in range(3, n):
 		next = fibo[-1] + fibo[-2]
-		print("Marker: ", i)
 		fibo.append(next)
-		if is_smith_number(next):
+		if is_smith_number(next, i):
 			print("!!!", next)
 			r.append(next)
 	return r
 
 
-def write_files():
-	file = open("fibonacci.txt", "w")
-	for numbers in fibo:
-		file.write(number)
-
-
-try:
-	fibonacci_and_smith(int(1e12))
-except KeyboardInterrupt:
-	print("KeyBoardInterrupt")
-finally:
-	write_files()
+fibonacci_and_smith(int(1001))
