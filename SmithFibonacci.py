@@ -1,19 +1,30 @@
 from math import sqrt
+from math import ceil
 from functools import reduce
+import pickle
+
 	
+try:
+	file = open("fibonacci.txt", "r")
+	fibo = []
+	for line in file.readlines():
+		fibo.append(int(line))
+except FileNotFoundError:
+	fibo = [1,1]
+
 
 def factors(n):
-    i = 2
-    fac = []
-    while i * i <= n:
-        if n % i:
-            i += 1
-        else:
-            n //= i
-            fac.append(i)
-    if n > 1:
-        fac.append(n)
-    return fac
+	i = 2
+	fac = []
+	while i * i <= n:
+		if n % i:
+			i += 1
+		else:
+			n //= i
+			fac.append(i)
+	if n > 1:
+		fac.append(n)
+	return fac
  
  
 def sum_digits(n):
@@ -38,19 +49,27 @@ def is_smith_number(n):
 		return False
 
 
-markers = int(100)
 def fibonacci_and_smith(n):
-	l = [1,1]
 	r = []
 	for i in range(n):
-		next = l[-1] + l[-2]
-		if i%markers == 0:
-			print("Marker: ", i, next)
-		l.append(next)
+		next = fibo[-1] + fibo[-2]
+		print("Marker: ", i)
+		fibo.append(next)
 		if is_smith_number(next):
 			print("!!!", next)
 			r.append(next)
 	return r
 
 
-fibonacci_and_smith(int(1e12))
+def write_files():
+	file = open("fibonacci.txt", "w")
+	for numbers in fibo:
+		file.write(number)
+
+
+try:
+	fibonacci_and_smith(int(1e12))
+except KeyboardInterrupt:
+	print("KeyBoardInterrupt")
+finally:
+	write_files()
